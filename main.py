@@ -138,11 +138,14 @@ def main(argv: list[str] | None = None) -> int:
 
     params: dict = {}
     log_extra: dict = {}
+
     if args.prompt_name:
         try:
             prompt = PromptKit(PROMPTS_DIR).get(args.prompt_name, args.prompt_version)
             variables = PROMPT_VARIABLES.get(prompt.name, {})
             messages = prompt.render(**variables, ticket=text)
+            print("prompt")
+            print(messages)
         except (PromptNotFoundError, ValueError) as e:
             return fail(str(e))
         cli_params: dict = {}  # Flags de la CLI (si existen) tienen prioridad.

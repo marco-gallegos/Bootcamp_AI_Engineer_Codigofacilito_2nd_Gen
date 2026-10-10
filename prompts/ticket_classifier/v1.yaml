@@ -4,7 +4,7 @@ active: false
 description: Clasificador ingenuo, sin delimitadores ni categoría "otro".
 model_params:
   temperature: 0
-  max_tokens: 10
+  max_tokens: 3000
 system: |
   Eres un asistente que clasifica tickets de soporte.
   Las categorías son: falla, solicitud, proveedor, facturacion. Responde breve.
