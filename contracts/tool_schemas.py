@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pydantic import BaseModel, Field
 
 from contracts.structured_output import sanitize_schema
+from tools.proveedores import buscar_proveedor
 from tools.tickets import buscar_ticket
 
 
@@ -38,6 +39,9 @@ class ToolSpec:
 class BuscarTicketArgs(BaseModel):
     ticket_id: str = Field(pattern=r"^T-\d{4}$")
 
+class BuscarProveedorArgs(BaseModel):
+    nombre: str = Field(pattern=r"\w$")
+
 
 BUSCAR_TICKET = ToolSpec(
     name="buscar_ticket",
@@ -47,6 +51,16 @@ BUSCAR_TICKET = ToolSpec(
     ),
     args_model=BuscarTicketArgs,
     handler=buscar_ticket,
+)
+
+BUSCAR_PROVEEDOR = ToolSpec(
+    name="buscar_proveedor",
+    description=(
+        "obtiene la informacion de los proveedores"
+        "usalara solo si menciona el nombre de un proveedor"
+    ),
+    args_model=BuscarProveedorArgs,
+    handler=buscar_proveedor
 )
 
 # TODO(clase-3): crea ConsultarProveedorArgs y CONSULTAR_PROVEEDOR.

@@ -20,6 +20,7 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from contracts import (
+    BUSCAR_PROVEEDOR,
     BUSCAR_TICKET,
     MaxIterationsError,
     StructuredOutputError,
@@ -53,7 +54,7 @@ PROMPT_VARIABLES = {
 TICKETS_DB_PATH = DATA_DIR / "tickets_db.json"
 
 # Herramientas disponibles en el modo --tools.
-TOOLS = [BUSCAR_TICKET]
+TOOLS = [BUSCAR_TICKET, BUSCAR_PROVEEDOR]
 TOOL_RESULT_PREVIEW = 120  # Caracteres que se muestran de cada resultado en pantalla.
 
 GRAY = "\033[90m"
