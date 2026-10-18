@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Literal
 
@@ -29,8 +30,15 @@ class AgentBudget:
             return "presupuesto"
         if elapsed_s >= self.max_segundos:
             return "timeout"
-        # TODO(clase-4): práctica guiada. Si la misma herramienta se llamó con los mismos
-        # argumentos dos pasos seguidos, regresa "sin_progreso".
+        if len(traza) >= 2:
+            prev = traza[-2].paso
+            last = traza[-1].paso
+            if (
+                prev.herramienta is not None
+                and prev.herramienta == last.herramienta
+                and _same_args(prev.argumentos_json, last.argumentos_json)
+            ):
+                return "sin_progreso"
         return None
 
     def exhausted_totals(
@@ -48,3 +56,14 @@ class AgentBudget:
         if elapsed_s >= self.max_segundos:
             return "timeout"
         return None
+
+
+def _same_args(a, b) -> bool:
+    if a == b:
+        return True
+    if a is None or b is None:
+        return False
+    try:
+        return json.loads(a) == json.loads(b)
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return False
