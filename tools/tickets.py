@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from contracts.tool_schemas import ActualizarEstadoArgs, BuscarTicketArgs
+    from contracts.tool_schemas import ActualizarEstadoArgs, BuscarTicketArgs, ListarTicketsPorProveedorArgs
 
 # Rutas fijas: nunca se construyen a partir de los argumentos del modelo.
 TICKETS_DB = Path(__file__).resolve().parents[1] / "data" / "tickets_db.json"
@@ -80,3 +80,9 @@ def actualizar_estado(args: ActualizarEstadoArgs) -> dict:
 
 # TODO(clase-5): práctica guiada. listar_tickets_por_proveedor(nombre) de solo lectura,
 # con tope de 10 resultados y el total encontrado.
+def listar_tickets_por_proveedor(args: ListarTicketsPorProveedorArgs) -> list:
+    """regresa los tickets relacionados a un proveedor por medio de su nombre, con un maximo de 10 resultados"""
+    tickets = _tickets()
+    tickets = [ ticket for ticket in tickets if ticket.get('proveedor') == args.nombre]
+    print(tickets)
+    return tickets
