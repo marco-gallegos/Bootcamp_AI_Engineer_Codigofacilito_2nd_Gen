@@ -112,8 +112,9 @@ ACTUALIZAR_ESTADO = ToolSpec(
 LISTAR_TICKETS_POR_PROVEEDOR = ToolSpec(
     name="listar_tickets_por_proveedor",
     description=(
-        "Lista los tickets asociados a un proveedor dado su nombre"
-        "usalo si el usuario busca tickets y te da el nombre de un proveedor"
+        "Lista los tickets asociados a un proveedor."
+        "Úsala cuando pregunten qué tickets tiene un "
+        "proveedor; para el detalle de un ticket usa buscar_ticket."
     ),
     args_model=ListarTicketsPorProveedorArgs,
     handler=listar_tickets_por_proveedor,

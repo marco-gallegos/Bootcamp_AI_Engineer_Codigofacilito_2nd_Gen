@@ -80,9 +80,18 @@ def actualizar_estado(args: ActualizarEstadoArgs) -> dict:
 
 # TODO(clase-5): práctica guiada. listar_tickets_por_proveedor(nombre) de solo lectura,
 # con tope de 10 resultados y el total encontrado.
-def listar_tickets_por_proveedor(args: ListarTicketsPorProveedorArgs) -> list:
+def listar_tickets_por_proveedor(args: ListarTicketsPorProveedorArgs) -> dict:
     """regresa los tickets relacionados a un proveedor por medio de su nombre, con un maximo de 10 resultados"""
-    tickets = _tickets()
-    tickets = [ ticket for ticket in tickets if ticket.get('proveedor') == args.nombre]
-    print(tickets)
-    return tickets
+    tickets_raw = _tickets()
+    tickets = []
+    for ticket in tickets_raw.keys():
+        if tickets_raw[ticket].get("proveedor") == args.nombre:
+            new_ticket = {
+                "id": ticket,
+                "asunto": tickets_raw[ticket].get("asunto"),
+                "estado": tickets_raw[ticket].get("estado")
+            }
+            tickets.append(new_ticket)
+        if(len(tickets) >= 10):
+            break
+    return { "tickets": tickets, "count": len(tickets) }
